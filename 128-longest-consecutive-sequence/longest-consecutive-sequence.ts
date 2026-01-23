@@ -3,15 +3,13 @@ function longestConsecutive(nums: number[]): number {
     const hp= new Map<number,number>();
     for(const num of nums){
         set.add(num);
-        hp.set(num,0);
     }
 
     let global_count=0;
-    for(const num of nums){
-        if(hp.get(num))continue;
+    for(const num of set){
+        
         if(set.has(num-1))continue;
         
-        hp.set(num,1);
         let current_count=1;
         let n=num+1;
         while(set.has(n)){
