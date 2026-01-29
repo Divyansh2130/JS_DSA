@@ -15,7 +15,7 @@
 function helper(node:TreeNode|null, left:boolean, sum:number): number{
     if(node.left===null && node.right===null){
         if(left)return node.val;
-        else return 0;
+        return 0;
     }
     
     let leftSum=0,rightSum=0;
