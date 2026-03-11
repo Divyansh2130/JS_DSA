@@ -3,22 +3,23 @@
  * @return {string[][]}
  */
 
-function isPalindrome(str,left,right){ 
-    
-  while (left < right) {
+// function isPalindrome(str,left,right){ 
+  
+//   while (left < right) {
 
-    if (str[left] !== str[right]) {
-      return false;
-    }
+//     if (str[left] !== str[right]) {
+//       return false;
+//     }
 
-    left++;
-    right--;
-  }
+//     left++;
+//     right--;
+//   }
 
-  return true;
-}
+//   return true;
+// }
+
 let result=[];
-function backtrack(start,path,s){
+function backtrack(start,path,s,dp){
         if(start==s.length){
             console.log(path);
             result.push([...path]);
@@ -26,12 +27,10 @@ function backtrack(start,path,s){
         }
 
         for(let end=start+1;end<=s.length;end++){
-            if(isPalindrome(s,start,end-1)){
-               
+            if(dp[start][end-1]){
                 path.push(s.substring(start,end));
-                backtrack(end,path,s);
+                backtrack(end,path,s,dp);
                 path.pop();
-            
             }
         }
        
@@ -40,7 +39,23 @@ function backtrack(start,path,s){
 var partition = function(s) {
     result=[];
     let path=[];
-    backtrack(0,path,s)
+
+    let dp= Array.from({length:s.length},()=>new Array(s.length).fill(false));
+    let n=s.length;
+    for(let i=0;i<n;i++){
+        dp[i][i]=true;
+    }
+
+    for(let length=2;length<=n;length++){
+        for(let i=0;i<=n-length;i++){
+            let j=i+length-1;
+            if(s[i]==s[j] && (length==2 || dp[i+1][j-1])){
+                dp[i][j]=true;
+            }
+        }
+    }
+    
+    backtrack(0,path,s,dp)
     return result;
 };
 
