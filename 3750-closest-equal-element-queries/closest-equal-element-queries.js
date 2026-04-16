@@ -31,13 +31,6 @@ var solveQueries = function(nums, queries) {
         lastOccur.set(nums[i], i);
     }
 
-    // Circular wrap adjustment
-    // for (let i = 0; i < n; i++) {
-    //     if (minDiff[i] !== Number.MAX_SAFE_INTEGER) {
-    //         minDiff[i] = Math.min(minDiff[i], n - minDiff[i]);
-    //     }
-    // }
-
     // Answer queries
     let answers = [];
     for (let q of queries) {
