@@ -32,11 +32,11 @@ var solveQueries = function(nums, queries) {
     }
 
     // Circular wrap adjustment
-    for (let i = 0; i < n; i++) {
-        if (minDiff[i] !== Number.MAX_SAFE_INTEGER) {
-            minDiff[i] = Math.min(minDiff[i], n - minDiff[i]);
-        }
-    }
+    // for (let i = 0; i < n; i++) {
+    //     if (minDiff[i] !== Number.MAX_SAFE_INTEGER) {
+    //         minDiff[i] = Math.min(minDiff[i], n - minDiff[i]);
+    //     }
+    // }
 
     // Answer queries
     let answers = [];
