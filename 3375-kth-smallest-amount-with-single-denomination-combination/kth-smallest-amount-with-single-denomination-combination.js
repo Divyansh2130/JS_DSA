@@ -14,6 +14,7 @@ var findKthSmallest = function(coins, k) {
         for (const y of newCoins) {
             if (x % y === 0) {
                 keep = false;
+                break;
             }
         }
 
