@@ -1,43 +1,39 @@
+/**
+ * @param {number[]} nums
+ * @param {number[]} queries
+ * @return {number[]}
+ */
 var solveQueries = function(nums, queries) {
-    let lastOccur = new Map();
-    let minDiff = new Array(nums.length).fill(Number.MAX_SAFE_INTEGER);
-    let n = nums.length;
+    const n = nums.length;
+    const map = new Map();
 
-    // Forward pass
-    for (let i = 0; i < n; i++) {
-        if (lastOccur.has(nums[i])) {
-            let prev = lastOccur.get(nums[i]);
-            let d = i - prev;
-
-            minDiff[i] = Math.min(minDiff[i], d);
-            minDiff[prev] = Math.min(minDiff[prev], d);
-        }
-        lastOccur.set(nums[i], i); // update always
-    }
-
-    // Reset map for circular pass
     
+    for (let i = 0; i < n; i++) {
+        if (!map.has(nums[i])) map.set(nums[i], []);
+        map.get(nums[i]).push(i);
+    }
 
-    // Backward pass (to handle circular case)
-    for (let i = 0; i<n; i++) {
-        if (minDiff[i] == Number.MAX_SAFE_INTEGER)continue;
-        if (lastOccur.has(nums[i])) {
-            let prev = lastOccur.get(nums[i]);
-            let d = Math.abs(prev - i);
+   
+    const ans = new Array(n).fill(-1);
 
-            minDiff[i] = Math.min(minDiff[i], Math.min(n-d,d));
-            minDiff[prev] = Math.min(minDiff[prev],  Math.min(n-d,d));
+    for (let arr of map.values()) {
+        let m = arr.length;
+        if (m === 1) continue;
+
+        for (let i = 0; i < m; i++) {
+            let curr = arr[i];
+            let prev = arr[(i - 1 + m) % m];
+            let next = arr[(i + 1) % m];
+
+            let d1 = Math.abs(curr - prev);
+            let d2 = Math.abs(curr - next);
+
+            ans[curr] = Math.min(
+                Math.min(d1, n - d1),
+                Math.min(d2, n - d2)
+            );
         }
-        lastOccur.set(nums[i], i);
     }
 
-    // Answer queries
-    let answers = [];
-    for (let q of queries) {
-        answers.push(
-            minDiff[q] === Number.MAX_SAFE_INTEGER ? -1 : minDiff[q]
-        );
-    }
-
-    return answers;
+    return queries.map(q => ans[q]);
 };
