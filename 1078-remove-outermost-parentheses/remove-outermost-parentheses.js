@@ -1,0 +1,23 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var removeOuterParentheses = function(s) {
+    let res="";
+    const stack=[];
+    for(let i=0;i<s.length;i++){
+        const c=s[i];
+        if(c===")"){
+            stack.pop();
+        }
+
+        if(stack.length){
+            res+=c;
+        }
+        if(c=="("){
+            stack.push(c);
+        }
+    }
+
+    return res;
+};
